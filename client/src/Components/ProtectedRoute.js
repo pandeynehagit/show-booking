@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Unauthorized from "../Pages/Unauthorised";
 import { Header } from "antd/es/layout/layout";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -15,7 +16,7 @@ import { message, Layout, Menu } from "antd";
 import { ShowLoading, HideLoading } from "../redux/loaderSlice";
 import { isTokenValid } from "../Utils/auth";
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children ,allowedRoles=[]}) {
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,41 +51,31 @@ function ProtectedRoute({ children }) {
       checkToken();
     }, []);
 
+    if (allowedRoles.length > 0 && (!user || !allowedRoles.includes(user.role))) {
+      return <Unauthorized />;
+    }
     
-    
-  
-   
- 
-
   const navItems = [
     {
-      label: (
-        <span
-        onClick={()=>{
-          navigate("/");
-        }}
-        >
-         Home
-        </span>
-      ),
-
+      key: "home",
+      label: "Home",
       icon: <HomeOutlined />,
-      // key: "home",
-      // label: "Home",
-      // icon: <HomeOutlined />,
-      // onClick:()=>{
-      //   navigate("/");
-      // }
+      onClick:()=>{
+        navigate("/");
+      }
+     
       
     },
     {
+      key: "user",
       label: `${user ? user.name : ""}`,
       icon: <UserOutlined />,
       children: [
         {
-          label: (
-            <span
-            onClick={() => {
+          key: "profile",
+          label: "My Profile",
+          icon: <UserOutlined />,
+          onClick:()=> {
               
               if (user && user.role === "admin") {
                 navigate("/admin");
@@ -93,27 +84,18 @@ function ProtectedRoute({ children }) {
               } else {
                 navigate("/profile");
               }
-            }}
-          >
-            My Profile
-          </span>
+            }
           
-          ),
-          icon: <ProfileOutlined />,
+          
         },
         {
-          label: (
-            <Link
-              to="/login"
-              onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/login");
-              }}
-            >
-              Log out
-            </Link>
-          ),
+           key: "logout",
+          label: "Logout",
           icon: <LogoutOutlined />,
+          onClick: () => {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }
         },
       ],
     },

@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
-
+import Unauthorized from "./Pages/Unauthorised";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import { Provider } from "react-redux";
@@ -23,7 +23,8 @@ function App() {
         <BrowserRouter>
          
           <Routes>
-          
+          <Route path="/unauthorized" element={<Unauthorized />} />
+
             <Route
               path="/"
               element={
@@ -39,7 +40,7 @@ function App() {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={["admin"]}>
                   <Admin />
                 </ProtectedRoute>
               }
@@ -47,7 +48,7 @@ function App() {
             <Route
               path="/partner"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={["partner"]}>
                   <Partner />
                 </ProtectedRoute>
               }
@@ -55,7 +56,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={["user"]}>
                   <Profile />
                 </ProtectedRoute>
               }
