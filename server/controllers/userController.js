@@ -154,7 +154,7 @@ const resetPassword  =async (req,res)=>{
         message:"OTP has expired"
        })
     }
-    user.password = resetDetails.password;
+    user.password = await bcrypt.hash(resetDetails.password, 10);
     user.otp = undefined;
     user.otpExpire = undefined;
     await user.save();
