@@ -39,12 +39,12 @@ app.use("/api/theatres",theatreRouter);
 app.use("/api/shows",showRouter);
 app.use("/api/bookings",bookRouter);
 
-//  Serve React build folder (IMPORTANT)
-app.use(express.static(path.join(__dirname, "../client/build")));
+//  Serve React build folder (IMPORTANT)use if deploying from=nt and back end togethr
+// app.use(express.static(path.join(__dirname, "../client/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+// });
 const PORT = process.env.PORT || 8082
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
