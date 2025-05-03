@@ -45,8 +45,8 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
-const Port = process.env.Port || 8082
-app.listen(Port, () => {
-  console.log(`Server is running on port ${Port}`);
+const PORT = process.env.PORT || 8082
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
