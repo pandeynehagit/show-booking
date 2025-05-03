@@ -1,6 +1,8 @@
 import { axiosInstance } from ".";
 
-const BASE_URL = "http://localhost:8082/api/bookings";
+
+const BASE_URL = `${process.env.REACT_APP_BASE_URL || "http://localhost:8082"}/api/bookings`;
+
 
 export const makePayment = async(token,amount)=>{
     try{

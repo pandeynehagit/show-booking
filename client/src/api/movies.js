@@ -1,5 +1,6 @@
 import{axiosInstance} from ".";
-const BASE_URL = "http://localhost:8082/api/movies";
+const BASE_URL = `${process.env.REACT_APP_BASE_URL || "http://localhost:8082"}/api/movies`;
+
 export const getAllMovies = async () => {
   try {
     const response = await axiosInstance.get(`${BASE_URL}/get-all-movies`);

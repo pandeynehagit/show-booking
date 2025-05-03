@@ -1,5 +1,6 @@
 import { axiosInstance } from ".";
-const BASE_URL = "http://localhost:8082/api/users";
+const BASE_URL = `${process.env.REACT_APP_BASE_URL || "http://localhost:8082"}/api/users`;
+
 
 export  const RegisterUser= async(value)=>{
   console.log("axiosInstance",axiosInstance);

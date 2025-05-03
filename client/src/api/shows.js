@@ -1,5 +1,6 @@
 import { axiosInstance } from ".";
-const BASE_URL = "http://localhost:8082/api/shows";
+const BASE_URL = `${process.env.REACT_APP_BASE_URL || "http://localhost:8082"}/api/shows`;
+
 export const addShow = async (payload) => {
   try {
     const response = await axiosInstance.post(`${BASE_URL}/add-show`, payload);
